@@ -41,8 +41,8 @@ Kotlin 的 `val` 表示參照不能重新賦值，lambda 可簡化點擊監聽�
 
 - 三個 Lab 的 `:app:assembleDebug`：成功，包含 Kotlin 編譯與 AndroidManifest 處理。
 - Lab4 模擬器測試：2/2 通過，含完整點餐資料回傳。
-- Lab5 模擬器測試：2/2 通過，含三個 Fragment 頁面滑動。生命週期回呼已在程式碼中確認；如需報告展示，可另擷取 Logcat 畫面。
+- Lab5 模擬器測試：2/2 通過，含三個 Fragment 頁面滑動。Logcat 實際顯示 `FirstFragment: onAttach`、`onCreateView`、`onResume`，切頁後也記錄第二、三頁的建立事件；正式報告可再擷取 Logcat 畫面。
 - Lab6 模擬器測試：9/9 通過，涵蓋 Toast、Snackbar 操作、三個對話框按鈕、五個列表選項及單選結果；`lintDebug` 成功。
 - 模擬器：Pixel 7 Pro，Android 17。執行畫面保存在 [`screenshots/`](screenshots/)；測試 XML 報告由各 Lab 的 `app/build/outputs/androidTest-results/connected/debug/` 產生，屬本機建置產物，不上傳。
 
-老師原始碼：<https://github.com/taipeitechmmslab/MMSLAB-Android-Kotlin>。作業 GitHub 目標：<https://github.com/Hugo-0529/Kotlin-Homework2>；請在遠端成功上傳後擷取 GitHub 頁面供 PDF 報告使用。
+老師原始碼：<https://github.com/taipeitechmmslab/MMSLAB-Android-Kotlin>。作業 GitHub：<https://github.com/Hugo-0529/Kotlin-Homework2>，已公開上傳至 `main`。正式 PDF 報告仍需補上 GitHub 頁面截圖及本人提供的讀書會資料。

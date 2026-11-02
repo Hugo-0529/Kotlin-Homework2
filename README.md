@@ -1,23 +1,21 @@
 # Kotlin Homework2
 
-應用軟體實習作業。學號：113360112，姓名：鄭世昕。
+應用軟體實習作業｜學號：113360112｜姓名：鄭世昕
 
-## 專案
+## 專案內容
 
-- `Lab4/`：Activity 點餐系統，可選擇飲料、甜度與冰塊，並把資料回傳主畫面。**目前找到的課堂版本使用 Java；Kotlin 版本尚待確認。**
-- `Lab5/`：目前找到的課堂版本是 Java 的 Toast 與 AlertDialog 示範。**此版本並非題目要求的 Kotlin Fragment 生命週期觀測；正確的課堂專案尚待確認。**
-- `Lab6/`：Kotlin 訊息提示元件，包含 Toast、可操作的 Snackbar、三按鈕／列表／單選 AlertDialog。沿用老師的主程式、版面與 Manifest。
+- `Lab4/`：Kotlin Activity 點餐系統。輸入飲料並選擇甜度、冰塊，使用 `ActivityResultLauncher` 將結果回傳主畫面。
+- `Lab5/`：Kotlin Fragment 生命週期觀測。以 ViewPager2 切換三個 Fragment，並將 Activity、Fragment 生命週期事件記錄到 Logcat。
+- `Lab6/`：Kotlin 訊息提示與互動。包含 Toast、附操作按鈕的 Snackbar、三按鈕對話框、列表對話框及單選對話框。
 
-各資料夾皆為可獨立開啟的 Android Studio 專案。使用 Android Studio 的 **Open** 分別選取 `Lab4`、`Lab5` 或 `Lab6`，等待 Gradle Sync，再執行 app。Windows 命令列可在各資料夾執行 `gradlew.bat :app:assembleDebug`。
+三個資料夾各是獨立的 Android Studio 專案。使用 Android Studio 的 **Open** 分別開啟 `Lab4`、`Lab5` 或 `Lab6`，等待 Gradle Sync 後執行 `app`。也可在各資料夾執行 `gradlew.bat :app:assembleDebug`。
 
-## 環境與驗證
+## 開發環境與驗證
 
-Windows 11、Android Studio 2026.1.4、JDK 21（Gradle Daemon 使用 Android Studio JBR 25）、Android SDK API 37、Gradle 9.6、Android Gradle Plugin 9.4.x、Kotlin、AndroidX、Material Components。
+Windows 11、Android Studio、JDK 21／Android Studio JBR、Android SDK API 37、Gradle 9.6、Android Gradle Plugin 9.4.1、Kotlin、AndroidX、Material Components。
 
-- 三個現有專案的 `assembleDebug` 均成功；這只證明目前檔案可建置，不能證明 Lab4／Lab5 已符合 Kotlin 作業要求。
-- Lab6 的 Android Studio Gradle Sync、`assembleDebug`、`lintDebug` 成功。Pixel 7 Pro Android 17 模擬器的 9 項 instrumentation 測試全部通過（包含 8 項元件互動測試）。
-- Lab4、Lab5 已在模擬器啟動畫面；課堂原始碼均完整保留。Lab4 點餐流程與 Lab5 的原始功能尚未做互動測試。
+三個 Lab 的 `:app:assembleDebug` 均成功。Pixel 7 Pro（Android 17）模擬器上，Lab4 點餐流程測試 2/2、Lab5 三頁滑動測試 2/2、Lab6 訊息元件測試 9/9 通過。Lab6 的 `:app:lintDebug` 也成功。測試涵蓋畫面互動；Lab5 的生命週期訊息可在 Logcat 以 `MainActivity`、`FirstFragment`、`SecondFragment`、`ThirdFragment` 篩選觀察。截圖位於 [`screenshots/`](screenshots/)，心得報告素材見 [`REPORT_MATERIALS.md`](REPORT_MATERIALS.md)。
 
-執行畫面保存在 [`screenshots/`](screenshots/)；Lab4、Lab5 的檔名標示了目前找到的 Java 版本。
+Lab4 與 Lab5 使用老師提供的 Kotlin 範例，僅調整建置版本與加入驗證測試。Lab5 的安裝套件 ID 改為 `com.example.lab5.homework2`，避免覆蓋本機舊版 Java App。Lab6 保留老師的主程式、版面及 Manifest，調整 Gradle 與測試相依版本以支援目前環境。
 
-老師範例：[MMSLAB-Android-Kotlin](https://github.com/taipeitechmmslab/MMSLAB-Android-Kotlin)，本次 Lab6 參考其 [`Lab6/`](https://github.com/taipeitechmmslab/MMSLAB-Android-Kotlin/tree/master/Lab6)。
+老師原始碼：[MMSLAB-Android-Kotlin](https://github.com/taipeitechmmslab/MMSLAB-Android-Kotlin)（[Lab4](https://github.com/taipeitechmmslab/MMSLAB-Android-Kotlin/tree/master/Lab4)／[Lab5](https://github.com/taipeitechmmslab/MMSLAB-Android-Kotlin/tree/master/Lab5)／[Lab6](https://github.com/taipeitechmmslab/MMSLAB-Android-Kotlin/tree/master/Lab6)）。

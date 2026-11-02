@@ -1,29 +1,48 @@
-# 心得報告素材（非正式 PDF）
+# Kotlin Homework2 心得報告素材
 
-學號：113360112；姓名：鄭世昕。讀書會成員、日期、地點、照片待本人提供。
+學號：113360112｜姓名：鄭世昕。此檔是報告素材，尚非正式 PDF。讀書會組員、時間、地點、照片與 GitHub 頁面截圖待本人提供或補拍。
 
 ## 功能與實作摘要
 
-- Lab4 現有版本：兩個 Activity 以 `ActivityResultLauncher` 與 `Intent`／`Bundle` 傳遞飲料、甜度、冰塊；目前程式是 Java，Kotlin 版尚待取得。
-- Lab5 現有版本：Java 主畫面的按鈕可開啟三按鈕對話框、自訂 Toast 和列表對話框；它與本次要求的 Fragment 生命週期觀測不同，正確檔案尚待取得。
-- Lab6：沿用老師的 Kotlin 範例。`MainActivity.kt` 在 `onCreate` 綁定五個按鈕；Toast 顯示短訊息；Snackbar 的 `setAction` 回應點擊；按鈕式 AlertDialog 的三個操作分別回傳 Toast；列表式用選項索引回傳文字；單選式以 `position` 記住選項，按確定後回傳。`activity_main.xml` 的五個 ID 均對應監聽器。
+- **Lab4 Activity 點餐系統**：主畫面用 `ActivityResultLauncher` 開啟 `SecActivity`。第二頁輸入飲料名稱、選甜度與冰塊，以 `Bundle`／`Intent` 回傳；主畫面顯示點餐結果。空白飲料名稱會提示使用者。
+- **Lab5 Fragment 生命週期觀測**：`ViewPager2` 與 `FragmentStateAdapter` 顯示三頁 Fragment。Activity 與 Fragment 的生命週期回呼使用 `Log.e` 記錄，滑動頁面時可在 Logcat 對照事件順序。
+- **Lab6 訊息提示與互動**：五個按鈕分別觸發 Toast、含操作按鈕的 Snackbar、三按鈕 AlertDialog、列表 AlertDialog、單選 AlertDialog。
 
-## 程式碼與優化心得
+## Lab6 主要程式碼
 
-主要檔案：`Lab6/app/src/main/java/com/example/lab6/MainActivity.kt` 第 24–93 行。共用的 `showToast(msg: String)` 減少重複的 Toast 建立程式；`arrayOf` 集中保存五個對話框選項。這些寫法本來就在老師的範例中。這次只調整 Gradle／測試套件相容性，主功能程式碼、XML、Manifest 與老師下載版本相同。
+檔案：`Lab6/app/src/main/java/com/example/lab6/MainActivity.kt`。
 
-實作心得：版本相容問題應先從建置設定與測試工具診斷，避免為了處理工具錯誤而重寫 UI。舊版 Espresso 在 Android 17 模擬器因 `InputManager.getInstance` 反射失敗；更新 Espresso 至 3.7.0 後，互動測試通過。原始檔案先做備份與雜湊比對，再整理副本，可確認課堂內容沒有遺失。
+- `onCreate` 透過 `findViewById<Button>` 取得五個 UI 按鈕並設定 `setOnClickListener`；對應 ID 位於 `activity_main.xml`。
+- Toast：`showToast("預設 Toast")` 呼叫 `Toast.makeText(..., Toast.LENGTH_SHORT).show()`。
+- Snackbar：`Snackbar.make(...).setAction("按鈕") { showToast("已回應") }.show()`，操作按鈕有實際回應。
+- 三按鈕對話框：`setNeutralButton`、`setNegativeButton`、`setPositiveButton` 各顯示相應結果。
+- 列表對話框：`setItems(item)` 以選取索引取得項目文字並回傳 Toast。
+- 單選對話框：`setSingleChoiceItems(item, 0)` 記錄 `position`，按「確定」後顯示選取項目；重新開啟時預設第一項。
 
-## Java 與 Kotlin 實際語法差異
+Lab6 的主程式、XML 與 Manifest 沿用老師 Kotlin 範例；相容性修改集中在 Gradle 版本與測試相依套件。
 
-現有 Lab5 Java 使用 `Button btn = findViewById(R.id.button);`，Lab6 Kotlin 使用 `val btnToast = findViewById<Button>(R.id.btnToast)`：Kotlin 以 `val` 宣告唯讀參照，型別可由泛型與右側推斷。Java 的 `new View.OnClickListener() { ... }`，Lab6 Kotlin 寫成 `setOnClickListener { ... }`，用 lambda 簡化單一方法介面的事件處理。現有 Lab5 Java 用 `final String[] list = {...}`；Lab6 Kotlin 用 `val item = arrayOf(...)`。
+## 程式碼優化心得
+
+老師的 Lab6 已將重複的 Toast 建立程序收進 `showToast(msg: String)`，讓五種互動共用同一個顯示方式。對話框選項集中在 `arrayOf(...)`，列表與單選對話框使用相同資料，修改選項時比較不容易漏改。此次整理時先備份與比對來源，再調整 Gradle，使功能程式碼保持清楚，也能分辨是程式錯誤或建置工具版本問題。Lab5 使用 ViewPager2 的 adapter 集中決定三個 Fragment，生命週期記錄則各留在對應類別，方便查看 Logcat。
+
+## Java 與 Kotlin 語法差異實例
+
+| 用途 | Java 寫法 | 本次 Kotlin 寫法 |
+| --- | --- | --- |
+| 取得元件 | `Button button = findViewById(R.id.btnToast);` | `val btnToast = findViewById<Button>(R.id.btnToast)` |
+| 點擊事件 | `button.setOnClickListener(v -> { ... });` | `btnToast.setOnClickListener { ... }` |
+| 字串陣列 | `String[] items = {"選項 1", "選項 2"};` | `val item = arrayOf("選項 1", "選項 2")` |
+| 字串插值 | `"你選的是" + items[i]` | `"你選的是${item[i]}"` |
+| 空值處理 | `if (intent != null) intent.getStringExtra("drink")` | `intent?.getStringExtra("drink")` |
+
+Kotlin 的 `val` 表示參照不能重新賦值，lambda 可簡化點擊監聽器，`?.` 可在物件為空時安全地回傳 null。這些例子分別出現在 Lab4、Lab6 的程式中。
 
 ## 建置、測試與畫面
 
-- Lab4、Lab5、Lab6 的 `:app:assembleDebug`：成功。
-- Lab6 的 Android Studio Gradle Sync 與 `:app:lintDebug`：成功；Lint 留有過時相依套件與 XML 硬編碼文字等警告，無錯誤。
-- Lab6 在 Pixel 7 Pro Android 17 模擬器上執行 9 項 instrumentation 測試：9 通過、0 失敗。覆蓋 Toast、Snackbar 操作、三種對話框操作與選擇結果。
-- Lab4、Lab5 已啟動並截圖；功能互動尚未驗證，且來源與作業要求不一致。
-- 截圖保存在 [`screenshots/`](screenshots/) 與本機 `C:\Users\hugoy\AndroidStudioProjects\Homework2-work\screenshots`，包括三個現有專案的主畫面與 Lab6 對話框。
+- 三個 Lab 的 `:app:assembleDebug`：成功，包含 Kotlin 編譯與 AndroidManifest 處理。
+- Lab4 模擬器測試：2/2 通過，含完整點餐資料回傳。
+- Lab5 模擬器測試：2/2 通過，含三個 Fragment 頁面滑動。生命週期回呼已在程式碼中確認；如需報告展示，可另擷取 Logcat 畫面。
+- Lab6 模擬器測試：9/9 通過，涵蓋 Toast、Snackbar 操作、三個對話框按鈕、五個列表選項及單選結果；`lintDebug` 成功。
+- 模擬器：Pixel 7 Pro，Android 17。執行畫面保存在 [`screenshots/`](screenshots/)；測試 XML 報告由各 Lab 的 `app/build/outputs/androidTest-results/connected/debug/` 產生，屬本機建置產物，不上傳。
 
-預定 GitHub Repository：<https://github.com/Hugo-0529/Kotlin-Homework2>。建立與推送狀態須待 Lab4／Lab5 正確來源確認後更新。
+老師原始碼：<https://github.com/taipeitechmmslab/MMSLAB-Android-Kotlin>。作業 GitHub 目標：<https://github.com/Hugo-0529/Kotlin-Homework2>；請在遠端成功上傳後擷取 GitHub 頁面供 PDF 報告使用。

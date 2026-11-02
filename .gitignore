@@ -1,0 +1,14 @@
+**/.gradle/
+**/.gradle-user/
+**/.idea/
+**/build/
+**/local.properties
+**/captures/
+**/.cxx/
+**/.externalNativeBuild/
+*.iml
+*.apk
+*.aab
+*.jks
+*.keystore
+.DS_Store
